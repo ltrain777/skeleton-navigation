@@ -1,23 +1,18 @@
 import {autoinject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-fetch-client';
-import 'fetch';
+import {GitHubService, IGitHubUser} from './services/githubservice'
 
 @autoinject
 export class Users {
   heading = 'Github Users';
-  users = [];
+  users: Array<IGitHubUser>;
 
-  constructor(private http: HttpClient) {
-    http.configure(config => {
-      config
-        .useStandardConfiguration()
-        .withBaseUrl('https://api.github.com/');
-    });
+  constructor(private gitHubSvc: GitHubService) {
   }
 
   activate() {
-    return this.http.fetch('users')
-      .then(response => response.json())
-      .then(users => this.users = users);
+    return this.gitHubSvc.getUsers()
+      .then(users => {
+        this.users = users
+      });
   }
 }
