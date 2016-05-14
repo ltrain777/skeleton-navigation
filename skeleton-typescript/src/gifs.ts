@@ -1,17 +1,20 @@
 import {autoinject} from 'aurelia-framework';
-import {RedditService, IRedditPosts} from './services/redditservice'
+import {IRedditPosts} from './services/redditservice'
+import {ApplicationService} from './services/applicationservice'
 
 @autoinject
 export class Funny {
-  heading = 'Reddit Funnies';
+  heading = 'Reddit Gifs';
   posts: IRedditPosts;
 
-  constructor(private redditSvc: RedditService) {
-    
+  constructor(private appSvc: ApplicationService) {
   }
 
   activate() {
-    return this.redditSvc.getGifPosts()
-      .then(result => { this.posts = result });
+    //this.posts = this.appSvc.gifPosts;
+    return this.appSvc.getGifs()
+      .then(gifs => {
+        this.posts = gifs
+      })
   }
 }

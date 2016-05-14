@@ -1,18 +1,16 @@
 import {autoinject} from 'aurelia-framework';
-import {GitHubService, IGitHubUser} from './services/githubservice'
+import {IGitHubUser} from './services/githubservice'
+import {ApplicationService} from './services/applicationservice'
 
 @autoinject
 export class Users {
   heading = 'Github Users';
   users: Array<IGitHubUser>;
 
-  constructor(private gitHubSvc: GitHubService) {
+  constructor(private appSvc: ApplicationService) {
   }
 
   activate() {
-    return this.gitHubSvc.getUsers()
-      .then(users => {
-        this.users = users
-      });
+    this.users = this.appSvc.users;
   }
 }
