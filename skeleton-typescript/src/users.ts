@@ -11,6 +11,10 @@ export class Users {
   }
 
   activate() {
-    this.users = this.appSvc.users;
+    //this.users = this.appSvc.users;
+    return this.appSvc.getUsers()
+      .then(res => {
+        this.users = res
+      })
   }
 }
